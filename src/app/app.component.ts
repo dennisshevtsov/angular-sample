@@ -1,4 +1,5 @@
 import { Component, } from '@angular/core';
+import { RouterOutlet, } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,13 @@ import { Component, } from '@angular/core';
   ]
 })
 export class AppComponent {
-  title = 'angular-sample';
+  public title: string = 'angular-sample';
+
+  public onActivate($event: any, routerOutlet: RouterOutlet): void {
+    console.log('Activate Component', $event, routerOutlet);
+  }
+
+  public onDeactivate($event: any, routerOutlet: RouterOutlet): void {
+    console.log('Deactivate Component', $event, routerOutlet);
+  }
 }
