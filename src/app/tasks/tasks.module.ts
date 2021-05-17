@@ -4,12 +4,14 @@ import { FormsModule, } from '@angular/forms';
 
 import { TasksRoutingModule, } from './tasks-routing.module';
 import { TaskListComponent,
-         TaskComponent, } from './components';
+         TaskComponent,
+         TaskFormComponent, } from './components';
 
 @NgModule({
   declarations: [
     TaskListComponent,
     TaskComponent,
+    TaskFormComponent,
   ],
   imports: [
     CommonModule,
