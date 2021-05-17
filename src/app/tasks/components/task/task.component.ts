@@ -13,7 +13,7 @@ import { TaskModel, } from './../../models/task.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskComponent {
-  @Input() public task: TaskModel;
+  @Input() public task: TaskModel = new TaskModel();
 
   @Output() public completeTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
   @Output() public editTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
