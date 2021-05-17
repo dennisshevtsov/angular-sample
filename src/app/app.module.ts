@@ -14,8 +14,8 @@ import { TasksModule } from './tasks/tasks.module';
   imports: [
     BrowserModule,
     LayoutModule,
-    AppRoutingModule,
     TasksModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [
