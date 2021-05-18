@@ -1,4 +1,8 @@
 import { Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, ParamMap, } from '@angular/router';
+
+import { PartialObserver, } from 'rxjs';
+import { switchMap, } from 'rxjs/operators';
 
 import { TaskModel, } from '../../models/task.model';
 import { TaskArrayService, } from '../../services/task-array.service';
@@ -13,10 +17,34 @@ export class TaskFormComponent implements OnInit {
 
   public constructor(
     private taskArrayService: TaskArrayService,
+    private route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
     this.task = new TaskModel();
+
+    const observer : PartialObserver<TaskModel | undefined> = {
+      next: (task: TaskModel | undefined) => {
+        if (task != null) {
+          this.task = { ...task };
+        }
+      },
+      error: (error: any) => console.log(error),
+    };
+    this.route
+        .paramMap
+        .pipe(
+          switchMap((params: ParamMap) => {
+            const taskId: string | null = params.get('taskID');
+
+            if (taskId != null)
+            {
+              return this.taskArrayService.getTask(+taskId);
+            }
+
+            return Promise.reject('Parameter taskID is null.');
+          }))
+        .subscribe(observer);
   }
 
   public onSaveTask(): void {
