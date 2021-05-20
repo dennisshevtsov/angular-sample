@@ -2,9 +2,15 @@ import { NgModule, } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
 
 import { AboutComponent,
-         PathNotFoundComponent, } from './layout';
+         PathNotFoundComponent,
+         MessagesComponent, } from './layout';
 
 const routes: Routes = [
+  {
+    path: 'messages',
+    component: MessagesComponent,
+    outlet: 'messages',
+  },
   {
     path: 'about',
     component: AboutComponent,

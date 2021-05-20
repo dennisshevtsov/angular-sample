@@ -21,11 +21,20 @@
       </nav>
 
       <div class="container">
-        <router-outlet
-          #routerOutlet="outlet"
-          (activate)='onActivate($event, routerOutlet)'
-          (deactivate)='onDeactivate($event, routerOutlet)'>
-        </router-outlet>
+        <div class="col-md-10">
+          <router-outlet
+            #routerOutlet="outlet"
+            (activate)='onActivate($event, routerOutlet)'
+            (deactivate)='onDeactivate($event, routerOutlet)'>
+          </router-outlet>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success"
+                  *ngIf="!messagesService.isDisplayed"
+                  (click)="onDisplayMessages()">
+            <span>Show Messages</span></button>
+          <router-outlet name="messages"></router-outlet>
+        </div>
       </div>
   </div>
 </div>

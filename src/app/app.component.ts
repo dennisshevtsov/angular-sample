@@ -1,15 +1,22 @@
 import { Component, } from '@angular/core';
-import { RouterOutlet, } from '@angular/router';
+import { Router, RouterOutlet, } from '@angular/router';
+
+import { MessagesService, } from './core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [
     './app.component.scss',
-  ]
+  ],
 })
 export class AppComponent {
   public title: string = 'angular-sample';
+
+  public constructor(
+    public messagesService: MessagesService,
+    private router: Router,
+  ) {}
 
   public onActivate($event: any, routerOutlet: RouterOutlet): void {
     console.log('Activate Component', $event, routerOutlet);
@@ -17,5 +24,14 @@ export class AppComponent {
 
   public onDeactivate($event: any, routerOutlet: RouterOutlet): void {
     console.log('Deactivate Component', $event, routerOutlet);
+  }
+
+  public onDisplayMessages(): void {
+    this.router.navigate([{
+      outlets: {
+        messages: [ 'messages',],
+      },
+    }]);
+    this.messagesService.isDisplayed = true;
   }
 }
