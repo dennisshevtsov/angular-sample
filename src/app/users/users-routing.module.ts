@@ -1,7 +1,29 @@
-import { NgModule, } from '@angular/core';
+import { NgModule,             } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
+import { UserFormComponent, UserListComponent } from './components';
 
-const routes: Routes = [];
+import { UsersComponent, } from './users.component';
+
+const routes: Routes = [
+  {
+    path: 'users',
+    component: UsersComponent,
+    children: [
+      {
+        path: 'add',
+        component: UserFormComponent,
+      },
+      {
+        path: 'edit/:userID',
+        component: UserFormComponent 
+      },
+      {
+        path: '',
+        component: UserListComponent,
+      }
+    ]
+  }
+];
 
 @NgModule({
   imports: [
@@ -12,4 +34,9 @@ const routes: Routes = [];
   ],
 })
 export class UsersRoutingModule {
+  public static components = [
+    UsersComponent,
+    UserListComponent,
+    UserFormComponent,
+  ]
 }
