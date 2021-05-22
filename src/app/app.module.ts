@@ -6,7 +6,7 @@ import { AppRoutingModule, } from './app-routing.module';
 import { AppComponent, } from './app.component';
 import { LayoutModule, } from './layout/layout.module';
 import { TasksModule, } from './tasks/tasks.module';
-import { UsersModule, } from './users/tasks.module';
+import { UsersModule, } from './users/users.module';
 
 @NgModule({
   declarations: [
