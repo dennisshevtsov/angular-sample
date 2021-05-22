@@ -1,11 +1,13 @@
-import { Component,
-         OnInit,
-         OnDestroy,      } from '@angular/core';
-import { ActivatedRoute, } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router, } from '@angular/router';
 
 import { PartialObserver, Subscription, } from 'rxjs';
 
-import { UserModel,        } from '../../models/user.model';
+import { UserModel, } from '../../models/user.model';
 import { UserArrayService, } from '../../services/user-array.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   public constructor(
     private userArrayService: UserArrayService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   public ngOnInit(): void {
@@ -35,7 +38,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
       error: (error: any) => console.log(error),
     };
     this.subscription = this.userArrayService.getUser(id)
-                                             .subscribe(observer);
+      .subscribe(observer);
   }
 
   public ngOnDestroy(): void {
@@ -53,8 +56,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     this.originalUser = { ...this.user };
+    this.onGoBack();
   }
 
-  public onGoBack() {
+  public onGoBack(): void {
+    const link: any[] = ['./../../'];
+    const extras: NavigationExtras = {
+      relativeTo: this.route,
+    };
+
+    this.router.navigate(link, extras);
   }
 }

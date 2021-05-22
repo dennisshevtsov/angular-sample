@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,      } from '@angular/core';
+import { ActivatedRoute, Router, } from '@angular/router';
 
 import { EMPTY, Observable, } from 'rxjs';
-import { catchError, } from 'rxjs/operators';
+import { catchError,        } from 'rxjs/operators';
 
-import { UserModel, } from '../../models/user.model';
+import { UserModel,        } from '../../models/user.model';
 import { UserArrayService, } from '../../services/user-array.service';
 
 @Component({
@@ -15,6 +16,8 @@ export class UserListComponent implements OnInit {
   
   public constructor(
     private userArrayService: UserArrayService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
@@ -25,5 +28,14 @@ export class UserListComponent implements OnInit {
         return EMPTY;
       })
     );
+  }
+
+  public onEditUser(user: UserModel): void {
+    const link: any[] = [
+      '/users/edit',
+      user.id,
+    ]
+
+    this.router.navigate(link);
   }
 }
