@@ -1,12 +1,12 @@
-import { NgModule, } from '@angular/core';
+import { NgModule,      } from '@angular/core';
 import { BrowserModule, } from '@angular/platform-browser';
-import { Router, } from '@angular/router';
+import { Router,        } from '@angular/router';
 
 import { AppRoutingModule, } from './app-routing.module';
-import { AppComponent, } from './app.component';
-import { LayoutModule, } from './layout/layout.module';
-import { TasksModule, } from './tasks/tasks.module';
-import { UsersModule, } from './users/users.module';
+import { AppComponent,     } from './app.component';
+import { LayoutModule,     } from './layout/layout.module';
+import { TasksModule,      } from './tasks/tasks.module';
+import { UsersModule,      } from './users/users.module';
 
 @NgModule({
   declarations: [
