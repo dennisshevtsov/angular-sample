@@ -18,8 +18,8 @@ import { AdminModule } from './admin/admin.module';
     LayoutModule,
     TasksModule,
     UsersModule,
-    AppRoutingModule,
     AdminModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [
