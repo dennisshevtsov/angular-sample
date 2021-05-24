@@ -1,6 +1,6 @@
 import { NgModule,             } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
-import { UserFormComponent, UserListComponent } from './components';
+import { UserComponent, UserFormComponent, UserListComponent } from './components';
 
 import { UsersComponent, } from './users.component';
 
@@ -35,6 +35,7 @@ const routes: Routes = [
 })
 export class UsersRoutingModule {
   public static components = [
+    UserComponent,
     UsersComponent,
     UserListComponent,
     UserFormComponent,
