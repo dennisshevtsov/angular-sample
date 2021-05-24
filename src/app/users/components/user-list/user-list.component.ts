@@ -1,10 +1,10 @@
-import { Component, OnInit,      } from '@angular/core';
-import { ActivatedRoute, Router, } from '@angular/router';
+import { Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router, } from '@angular/router';
 
 import { EMPTY, Observable, } from 'rxjs';
-import { catchError,        } from 'rxjs/operators';
+import { catchError, switchMap, } from 'rxjs/operators';
 
-import { UserModel,        } from '../../models/user.model';
+import { UserModel, } from '../../models/user.model';
 import { UserArrayService, } from '../../services/user-array.service';
 
 @Component({
@@ -12,8 +12,10 @@ import { UserArrayService, } from '../../services/user-array.service';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  public users$: Observable<UserModel[]>
-  
+  public users$: Observable<UserModel[]>;
+
+  private editedUser: UserModel;
+
   public constructor(
     private userArrayService: UserArrayService,
     private router: Router,
@@ -28,6 +30,25 @@ export class UserListComponent implements OnInit {
         return EMPTY;
       })
     );
+
+    const observer = {
+      next: (user: UserModel) => {
+        this.editedUser = { ...user };
+
+        console.log(`Last time you edited user ${JSON.stringify(this.editedUser)}`);
+      },
+      error: (error: any) => console.log(error),
+    };
+    this.route.paramMap.pipe(switchMap((params: ParamMap) => this.userArrayService.getUser(+params.get('editedUserId')!)))
+                       .subscribe(observer);
+  }
+
+  public isEdited(user: UserModel): boolean {
+    if (this.editedUser) {
+      return user.id === this.editedUser.id;
+    }
+
+    return false;
   }
 
   public onEditUser(user: UserModel): void {
