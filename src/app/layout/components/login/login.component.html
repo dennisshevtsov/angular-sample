@@ -1,1 +1,13 @@
-<p>login works!</p>
+<h2><span>LOGIN</span></h2>
+<p>Stage: {{message}}</p>
+<p>
+  <button class="btn btn-primary"
+          (click)="onLogout()"
+          *ngIf="authService.isLoggedIn; else loginBtn">
+    <span>Logout</span></button>
+  <ng-template #loginBtn>
+    <button class="btn btn-primary"
+            (click)="onLogin()">
+      <span>Login</span></button>
+  </ng-template>
+</p>
