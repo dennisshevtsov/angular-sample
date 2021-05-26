@@ -23,8 +23,8 @@ export class AuthGuard implements CanActivate {
   public canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> |
-                                 Promise<boolean | UrlTree> |
-                                 boolean | UrlTree {
+    Promise<boolean | UrlTree> |
+    boolean | UrlTree {
     console.log('CanActivate Guard is called.');
 
     const { url } = state;
