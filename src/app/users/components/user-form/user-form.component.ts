@@ -3,9 +3,10 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router, } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router, UrlTree, } from '@angular/router';
 
-import { PartialObserver, Subscription, } from 'rxjs';
+import { Observable, PartialObserver, Subscription, } from 'rxjs';
+import { CanComponentDeactivate, DialogService } from 'src/app/core';
 
 import { UserModel, } from '../../models/user.model';
 import { UserArrayService, } from '../../services/user-array.service';
@@ -14,7 +15,7 @@ import { UserArrayService, } from '../../services/user-array.service';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit, OnDestroy {
+export class UserFormComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   public user: UserModel;
   public originalUser: UserModel;
 
@@ -22,6 +23,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   public constructor(
     private userArrayService: UserArrayService,
+    private dialogService: DialogService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
@@ -43,6 +45,24 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  public canDeactivate()
+    : Observable<boolean | UrlTree> |
+      Promise<boolean | UrlTree> |
+      boolean | UrlTree {
+    const flags = Object.keys(this.originalUser)
+                        .map(key => {
+                          const property = key as keyof UserModel;
+
+                          this.originalUser[property] === this.user[property];
+                        });
+
+    if (flags.every(flag => flag)) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 
   public onSaveUser(): void {
