@@ -6,6 +6,7 @@ import {
 import { ActivatedRoute, NavigationExtras, Router, UrlTree, } from '@angular/router';
 
 import { Observable, PartialObserver, Subscription, } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 import { CanComponentDeactivate, DialogService } from 'src/app/core';
 
 import { UserModel, } from '../../models/user.model';
@@ -15,7 +16,7 @@ import { UserArrayService, } from '../../services/user-array.service';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class UserFormComponent implements OnInit, CanComponentDeactivate {
   public user: UserModel;
   public originalUser: UserModel;
 
@@ -29,22 +30,11 @@ export class UserFormComponent implements OnInit, OnDestroy, CanComponentDeactiv
   ) { }
 
   public ngOnInit(): void {
-    this.user = new UserModel(0, '', '');
-
-    const id: number = +this.route.snapshot.paramMap.get('userID')!;
-    const observer: PartialObserver<UserModel> = {
-      next: (user: UserModel) => {
-        this.user = { ...user };
-        this.originalUser = { ...user };
-      },
-      error: (error: any) => console.log(error),
-    };
-    this.subscription = this.userArrayService.getUser(id)
-      .subscribe(observer);
-  }
-
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.route.data.pipe(pluck('user'))
+                   .subscribe((user: UserModel) => {
+                     this.user = { ...user };
+                     this.originalUser = { ...user };
+                   });
   }
 
   public canDeactivate()

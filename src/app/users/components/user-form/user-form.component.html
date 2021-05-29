@@ -3,8 +3,7 @@
     <h4 class="panel-title"><span>User Form</span></h4>
   </div>
   <div class="panel-body">
-    <form *ngIf="user"
-          (ngSubmit)="onSaveUser()"
+    <form (ngSubmit)="onSaveUser()"
           id="user-form"
           #form="ngForm">
       <div class="form-group">
