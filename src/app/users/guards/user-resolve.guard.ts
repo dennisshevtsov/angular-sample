@@ -12,7 +12,7 @@ import { UserModel, } from './../models/user.model';
 @Injectable({
   providedIn: 'any',
 })
-export class UserResolveGuard implements Resolve<UserModel> {
+export class UserResolveGuard implements Resolve<UserModel | null> {
   public constructor(
     private userArrayService: UserArrayService,
     private router: Router,
@@ -20,7 +20,9 @@ export class UserResolveGuard implements Resolve<UserModel> {
 
   public resolve(
     route: ActivatedRouteSnapshot,
-  ): Observable<UserModel | null> {
+  ): Observable<UserModel | null> |
+     Promise<UserModel | null> |
+     UserModel | null {
     console.log('UserResolve Guard is called');
 
     if (!route.paramMap.has('userID')) {
