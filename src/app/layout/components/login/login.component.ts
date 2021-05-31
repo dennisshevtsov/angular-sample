@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/core';
@@ -40,7 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy {
           const redirect: string = this.authService.rediredUrl
             ? this.authService.rediredUrl
             : '/admin';
-          this.router.navigate([redirect]);
+
+          const navigationExtras: NavigationExtras = {
+            queryParamsHandling: 'preserve',
+            preserveFragment: true,
+          };
+
+          this.router.navigate([redirect], navigationExtras);
         }
       },
       error: (error: any) => console.log(error),

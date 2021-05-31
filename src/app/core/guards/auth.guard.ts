@@ -2,6 +2,7 @@ import { Injectable, } from '@angular/core';
 import { ActivatedRouteSnapshot,
          CanActivate,
          CanActivateChild,
+         NavigationExtras,
          Router,
          RouterStateSnapshot,
          UrlTree, } from '@angular/router';
@@ -52,6 +53,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     this.authService.rediredUrl = url;
 
-    return this.router.parseUrl('/login');
+    const sessionId: number = 123456789;
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: { sessionId, },
+      fragment: 'anchor',
+    };
+
+    this.router.navigate([ '/login', ], navigationExtras)
+
+    return false;
   }
 }
