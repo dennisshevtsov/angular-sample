@@ -4,8 +4,9 @@ import { ActivatedRouteSnapshot,
          Router, } from '@angular/router';
 
 import { Observable, of, } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, delay, finalize, map, take, } from 'rxjs/operators';
 
+import { SpinnerService, } from './../../widgets';
 import { UserArrayService, } from '../services';
 import { UserModel, } from './../models/user.model';
 
@@ -15,6 +16,7 @@ import { UserModel, } from './../models/user.model';
 export class UserResolveGuard implements Resolve<UserModel | null> {
   public constructor(
     private userArrayService: UserArrayService,
+    private spinner: SpinnerService,
     private router: Router,
   ) {}
 
@@ -29,24 +31,27 @@ export class UserResolveGuard implements Resolve<UserModel | null> {
       return of(new UserModel(0, '', ''));
     }
 
+    this.spinner.show();
     const id = +route.paramMap.get('userID')!;
 
     return this.userArrayService.getUser(id)
-                                .pipe(map((user: UserModel) => {
-                                  if (user) {
-                                    return user;
-                                  }
-                                  else {
-                                    this.router.navigate(['/users']);
+                                .pipe(delay(2000),
+                                      map((user: UserModel) => {
+                                        if (user) {
+                                          return user;
+                                        }
+                                        else {
+                                          this.router.navigate(['/users']);
 
-                                    return null;
-                                  }
-                                }),
-                                take(1),
-                                catchError(() => {
-                                  this.router.navigate(['/users']);
+                                          return null;
+                                        }
+                                      }),
+                                      take(1),
+                                      catchError(() => {
+                                        this.router.navigate(['/users']);
 
-                                  return of(null);
-                                }));
+                                        return of(null);
+                                      }),
+                                      finalize(() => this.spinner.hide()));
   }
 }
