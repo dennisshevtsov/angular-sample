@@ -1,6 +1,7 @@
 import { NgModule, } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
 
+import { AuthGuard, } from './core';
 import { AboutComponent,
          PathNotFoundComponent,
          MessagesComponent,
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canLoad: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule),
   },
   {
