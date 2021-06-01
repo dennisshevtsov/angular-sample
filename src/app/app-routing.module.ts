@@ -26,6 +26,14 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule),
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then(model => model.UsersModule),
+  },
+  {
     path: '**',
     component: PathNotFoundComponent,
   },

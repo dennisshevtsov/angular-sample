@@ -1,7 +1,7 @@
 import { NgModule,             } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
-import { AuthGuard } from '../core';
 
+import { AuthGuard,               } from '../core';
 import { AdminComponent,          } from './admin.component';
 import { AdminDashboardComponent,
          ManageTasksComponent,
@@ -9,7 +9,7 @@ import { AdminDashboardComponent,
 
 const routes: Routes = [
   {
-    path: 'admin',
+    path: '',
     component: AdminComponent,
     canActivate: [
       AuthGuard,
