@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, } from '@angular/core';
 import { Title, } from '@angular/platform-browser';
-import { NavigationEnd, Router, RouterOutlet, } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterOutlet, } from '@angular/router';
 
-import { Subscription, } from 'rxjs';
+import { PartialObserver, Subscription, } from 'rxjs';
+import { filter, map, switchMap, } from 'rxjs/operators';
 import { SpinnerService, } from './widgets';
 
 import { CustomPreloadingStrategyService, MessagesService, } from './core';
-import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -74,5 +74,18 @@ export class AppComponent implements OnInit, OnDestroy {
       filter(route => route.outlet === 'primary'),
       switchMap(route => route.data)
     ).subscribe(data => this.titleService.setTitle(data.title));
+  }
+
+  private setMessageServiceOnRefresh(): void {
+    const observer: PartialObserver<NavigationStart> | undefined = {
+      next: (event: NavigationStart) => {
+        (event: NavigationStart) => this.messagesService.isDisplayed = event.url.includes('message');
+      },
+    };
+
+    this.sub.navigationStart = this.router.events
+      .pipe(filter(event => event instanceof NavigationStart))
+      .pipe(map(event => event as NavigationStart))
+      .subscribe(observer);
   }
 }
