@@ -34,6 +34,9 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(model => model.UsersModule),
+    data: {
+      preload: true,
+    },
   },
   {
     path: '**',
