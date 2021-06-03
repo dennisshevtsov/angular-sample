@@ -16,10 +16,16 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
+    data: {
+      title: 'About',
+    },
   },
   {
     path: 'login',
     component: LoginComponent,
+    data: {
+      title: 'Login',
+    },
   },
   {
     path: '',
@@ -30,17 +36,24 @@ const routes: Routes = [
     path: 'admin',
     canLoad: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule),
+    data: {
+      title: 'Admin',
+    },
   },
   {
     path: 'users',
     loadChildren: () => import('./users/users.module').then(model => model.UsersModule),
     data: {
       preload: true,
+      title: 'Users',
     },
   },
   {
     path: '**',
     component: PathNotFoundComponent,
+    data: {
+      title: 'Page Not Found',
+    },
   },
 ];
 
