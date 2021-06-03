@@ -35,9 +35,11 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.setPageTitles();
+    this.setMessageServiceOnRefresh();
   }
 
   public ngOnDestroy(): void {
+    this.sub.navigationStart.unsubscribe();
     this.sub.navigationEnd.unsubscribe();
   }
 
