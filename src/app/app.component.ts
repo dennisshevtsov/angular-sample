@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit, } from '@angular/core';
-import { Title, } from '@angular/platform-browser';
-import { NavigationEnd, NavigationStart, Router, RouterOutlet, } from '@angular/router';
+import { Meta, Title, } from '@angular/platform-browser';
+import { NavigationEnd,
+         NavigationStart,
+         Router,
+         RouterOutlet, } from '@angular/router';
 
 import { PartialObserver, Subscription, } from 'rxjs';
 import { filter, map, switchMap, } from 'rxjs/operators';
 import { SpinnerService, } from './widgets';
 
-import { CustomPreloadingStrategyService, MessagesService, } from './core';
+import { CustomPreloadingStrategyService,
+         MessagesService, } from './core';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private preloadingStrategy: CustomPreloadingStrategyService,
     private titleService: Title,
     private router: Router,
+    private metaService: Meta,
   ) {}
 
   public ngOnInit(): void {
@@ -47,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('Activate Component', $event, routerOutlet);
 
     this.titleService.setTitle(routerOutlet.activatedRouteData.title);
+    this.metaService.addTags(routerOutlet.activatedRouteData.meta);
   }
 
   public onDeactivate($event: any, routerOutlet: RouterOutlet): void {
