@@ -1,6 +1,7 @@
-import { NgModule,      } from '@angular/core';
-import { BrowserModule, } from '@angular/platform-browser';
-import { Router,        } from '@angular/router';
+import { NgModule,         } from '@angular/core';
+import { BrowserModule,    } from '@angular/platform-browser';
+import { Router,           } from '@angular/router';
+import { HttpClientModule, } from '@angular/common/http';
 
 import { AppRoutingModule, } from './app-routing.module';
 import { AppComponent,     } from './app.component';
@@ -14,6 +15,7 @@ import { SpinnerModule,    } from './widgets/spinner/spinner.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     LayoutModule,
     TasksModule,
     SpinnerModule.forRoot(),
