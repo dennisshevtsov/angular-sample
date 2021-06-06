@@ -5,7 +5,8 @@ import { PartialObserver, } from 'rxjs';
 import { switchMap, } from 'rxjs/operators';
 
 import { TaskModel, } from '../../models/task.model';
-import { TaskArrayService, } from '../../services/task-array.service';
+import { TaskArrayService,
+         TaskPromiseService, } from '../../services';
 
 @Component({
   selector: 'app-task-form',
@@ -17,6 +18,7 @@ export class TaskFormComponent implements OnInit {
 
   public constructor(
     private taskArrayService: TaskArrayService,
+    private taskPromiseService: TaskPromiseService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -40,7 +42,8 @@ export class TaskFormComponent implements OnInit {
 
             if (taskId != null)
             {
-              return this.taskArrayService.getTask(+taskId);
+              //return this.taskArrayService.getTask(+taskId);
+              return this.taskPromiseService.getTask(+params.get('taskID')!);
             }
 
             return Promise.reject('Parameter taskID is null.');

@@ -20,6 +20,16 @@ export class TaskPromiseService {
       .catch(this.handleError);
   }
 
+  public getTask(id: number): Promise<TaskModel> {
+    const url: string = `${this.tasksUrl}/${id}`;
+
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(response => response as TaskModel)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
 
