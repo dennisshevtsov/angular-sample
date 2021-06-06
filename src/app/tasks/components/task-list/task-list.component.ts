@@ -25,9 +25,8 @@ export class TaskListComponent implements OnInit {
   }
 
   public onCompleteTask(task: TaskModel): void {
-    const updatedTask = { ...task, done: true, };
-
-    this.taskArrayService.updateTask(updatedTask);
+    this.updateTask(task)
+        .catch(error => console.log(error));
   }
 
   public onEditTask(task: TaskModel): void {
@@ -37,5 +36,17 @@ export class TaskListComponent implements OnInit {
     ];
 
     this.router.navigate(link);
+  }
+
+  private async updateTask(task: TaskModel): Promise<void> {
+    const updatedTask: TaskModel = await this.taskPromiseService.updateTask({
+      ...task,
+      done: true,
+    });
+
+    const tasks: TaskModel[] = await this.tasks;
+    const index: number = tasks.findIndex(task => task.id === updatedTask.id);
+
+    tasks[index] = { ...updatedTask };
   }
 }

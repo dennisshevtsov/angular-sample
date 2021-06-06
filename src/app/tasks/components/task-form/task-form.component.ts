@@ -42,7 +42,6 @@ export class TaskFormComponent implements OnInit {
 
             if (taskId != null)
             {
-              //return this.taskArrayService.getTask(+taskId);
               return this.taskPromiseService.getTask(+params.get('taskID')!);
             }
 
@@ -55,13 +54,13 @@ export class TaskFormComponent implements OnInit {
     const task: TaskModel = { ...this.task } as TaskModel;
 
     if (task.id) {
-      this.taskArrayService.updateTask(task);
+      this.taskPromiseService.updateTask(task)
+                             .then(() => this.onGoBack());
     }
     else {
       this.taskArrayService.createTask(task);
+      this.onGoBack();
     }
-
-    this.onGoBack();
   }
 
   public onGoBack(): void {
