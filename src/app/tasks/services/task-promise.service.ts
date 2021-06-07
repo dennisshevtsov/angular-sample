@@ -31,9 +31,25 @@ export class TaskPromiseService {
       .catch(this.handleError);
   }
 
+  public createTask(task: TaskModel): Promise<TaskModel> {
+    const url: string = this.tasksUrl;
+    const body: string = JSON.stringify(task);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http
+      .post(url, body, options)
+      .toPromise()
+      .then(response => response as TaskModel)
+      .catch(this.handleError);
+  }
+
   public updateTask(task: TaskModel): Promise<TaskModel> {
     const url: string = `${this.tasksUrl}/${task.id}`;
-    const body:string = JSON.stringify(task);
+    const body: string = JSON.stringify(task);
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'applicantion/json',

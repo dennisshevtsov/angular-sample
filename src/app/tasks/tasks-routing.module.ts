@@ -14,7 +14,7 @@ const metaTags: MetaDefinition[] = [
   {
     name: 'keywords',
     content: 'Angular tutorial, APA, Routing',
-  }
+  },
 ];
 
 const routes: Routes = [
@@ -25,6 +25,10 @@ const routes: Routes = [
       title: 'Task Manager',
       meta: metaTags,
     },
+  },
+  {
+    path: 'add',
+    component: TaskFormComponent,
   },
   {
     path: 'edit/:taskID',

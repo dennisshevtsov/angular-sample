@@ -26,8 +26,8 @@ export class TaskFormComponent implements OnInit {
   public ngOnInit(): void {
     this.task = new TaskModel();
 
-    const observer : PartialObserver<TaskModel | undefined> = {
-      next: (task: TaskModel | undefined) => {
+    const observer : PartialObserver<TaskModel | null> = {
+      next: (task: TaskModel | null) => {
         if (task != null) {
           this.task = { ...task };
         }
@@ -45,22 +45,18 @@ export class TaskFormComponent implements OnInit {
               return this.taskPromiseService.getTask(+params.get('taskID')!);
             }
 
-            return Promise.reject('Parameter taskID is null.');
+            return Promise.resolve(null);
           }))
         .subscribe(observer);
   }
 
   public onSaveTask(): void {
     const task: TaskModel = { ...this.task } as TaskModel;
+    const method: keyof TaskPromiseService = task.id ? 'updateTask' : 'createTask';
 
-    if (task.id) {
-      this.taskPromiseService.updateTask(task)
-                             .then(() => this.onGoBack());
-    }
-    else {
-      this.taskArrayService.createTask(task);
-      this.onGoBack();
-    }
+    this.taskPromiseService[method](task)
+        .then(() => this.onGoBack())
+        .catch(error => console.log(error));
   }
 
   public onGoBack(): void {

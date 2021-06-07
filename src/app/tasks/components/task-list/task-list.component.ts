@@ -1,9 +1,9 @@
 import { Component, OnInit, } from '@angular/core';
 import { Router, } from '@angular/router';
-import { TaskPromiseService } from '../../services';
 
 import { TaskModel, } from './../../models/task.model';
 import { TaskArrayService, } from './../../services/task-array.service';
+import { TaskPromiseService, } from '../../services';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -22,6 +22,12 @@ export class TaskListComponent implements OnInit {
   public ngOnInit(): void {
     this.tasks = this.taskArrayService.getTasks();
     this.tasks = this.taskPromiseService.getTasks();
+  }
+
+  public onCreateTask(): void {
+    const link = [ '/add' ];
+
+    this.router.navigate(link);
   }
 
   public onCompleteTask(task: TaskModel): void {
