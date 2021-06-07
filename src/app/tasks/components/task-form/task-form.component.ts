@@ -5,8 +5,7 @@ import { PartialObserver, } from 'rxjs';
 import { switchMap, } from 'rxjs/operators';
 
 import { TaskModel, } from '../../models/task.model';
-import { TaskArrayService,
-         TaskPromiseService, } from '../../services';
+import { TaskPromiseService, } from '../../services';
 
 @Component({
   selector: 'app-task-form',
@@ -17,7 +16,6 @@ export class TaskFormComponent implements OnInit {
   public task: TaskModel;
 
   public constructor(
-    private taskArrayService: TaskArrayService,
     private taskPromiseService: TaskPromiseService,
     private router: Router,
     private route: ActivatedRoute,
