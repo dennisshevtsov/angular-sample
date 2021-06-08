@@ -13,10 +13,17 @@ import { TaskModel, } from './../../models/task.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskComponent {
-  @Input() public task: TaskModel;
+  @Input()
+  public task: TaskModel;
 
-  @Output() public completeTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
-  @Output() public editTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
+  @Output()
+  public completeTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
+
+  @Output()
+  public editTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
+
+  @Output()
+  public deleteTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
 
   public onCompleteTask(): void {
     this.completeTask.emit(this.task);
@@ -24,5 +31,9 @@ export class TaskComponent {
 
   public onEditTask(): void {
     this.editTask.emit(this.task);
+  }
+
+  public onDeleteTask(): void {
+    this.deleteTask.emit(this.task);
   }
 }
