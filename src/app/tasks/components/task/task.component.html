@@ -10,8 +10,13 @@
     </ul>
     <button class="btn btn-primary btn-sm"
             (click)="onCompleteTask()"
-            [disabled]="task.done">Done</button>
+            [disabled]="task.done">
+      <span>Done</span></button>
     <button class="btn btn-warning btn-sm"
-            (click)="onEditTask()">Edit</button>
+            (click)="onEditTask()">
+      <span>Edit</span></button>
+    <button class="btn btn-danget btn-sm"
+            (click)="onDeleteTask()">
+      <span>Delete</span></button>
   </div>
 </div>

@@ -42,10 +42,11 @@ export class TaskListComponent implements OnInit {
   }
 
   private async updateTask(task: TaskModel): Promise<void> {
-    const updatedTask: TaskModel = await this.taskPromiseService.updateTask({
+    const updatingTask: TaskModel = {
       ...task,
       done: true,
-    });
+    };
+    const updatedTask: TaskModel = await this.taskPromiseService.updateTask(updatingTask);
 
     const tasks: TaskModel[] = await this.tasks;
     const index: number = tasks.findIndex(task => task.id === updatedTask.id);
