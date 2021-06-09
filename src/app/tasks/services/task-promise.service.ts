@@ -52,7 +52,7 @@ export class TaskPromiseService {
     const body: string = JSON.stringify(task);
     const options = {
       headers: new HttpHeaders({
-        'Content-Type': 'applicantion/json',
+        'Content-Type': 'application/json',
       }),
     };
 

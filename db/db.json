@@ -1,11 +1,8 @@
 {
   "tasks": [
     {
-      "id": 1
-    },
-    {
       "id": 2,
-      "action": "Create",
+      "action": "Create1",
       "priority": 2,
       "estHours": 8
     },
@@ -19,19 +16,15 @@
       "id": 4,
       "action": "Delete",
       "priority": 3,
-      "estHours": 2
+      "estHours": 2,
+      "done": true
     },
     {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 8
+      "id": 5,
+      "action": "test1",
+      "priority": 1,
+      "estHours": 2,
+      "done": true
     }
   ],
   "users": [

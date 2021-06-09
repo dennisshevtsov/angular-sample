@@ -1,15 +1,17 @@
 import { Component, OnInit, } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, } from '@angular/router';
 
-import { EMPTY, Observable, } from 'rxjs';
-import { catchError, switchMap, } from 'rxjs/operators';
+import { Observable, } from 'rxjs';
+import { switchMap, } from 'rxjs/operators';
 
 import { UserModel, } from '../../models/user.model';
-import { UserArrayService, } from '../../services/user-array.service';
+import { UserArrayService, UserObservableService, } from '../../services';
 
 @Component({
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: [
+    './user-list.component.scss',
+  ],
 })
 export class UserListComponent implements OnInit {
   public users$: Observable<UserModel[]>;
@@ -18,18 +20,13 @@ export class UserListComponent implements OnInit {
 
   public constructor(
     private userArrayService: UserArrayService,
+    private userObservableService: UserObservableService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
-    this.users$ = this.userArrayService.users$.pipe(
-      catchError(error => {
-        console.log(error);
-
-        return EMPTY;
-      })
-    );
+    this.users$ = this.userObservableService.getUsers();
 
     const observer = {
       next: (user: UserModel) => {
