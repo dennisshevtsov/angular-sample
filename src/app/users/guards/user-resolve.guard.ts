@@ -7,7 +7,7 @@ import { Observable, of, } from 'rxjs';
 import { catchError, delay, finalize, map, take, } from 'rxjs/operators';
 
 import { SpinnerService, } from './../../widgets';
-import { UserArrayService, } from '../services';
+import { UserObservableService, } from '../services';
 import { UserModel, } from './../models/user.model';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { UserModel, } from './../models/user.model';
 })
 export class UserResolveGuard implements Resolve<UserModel | null> {
   public constructor(
-    private userArrayService: UserArrayService,
+    private userObservableService: UserObservableService,
     private spinner: SpinnerService,
     private router: Router,
   ) {}
@@ -34,24 +34,24 @@ export class UserResolveGuard implements Resolve<UserModel | null> {
     this.spinner.show();
     const id = +route.paramMap.get('userID')!;
 
-    return this.userArrayService.getUser(id)
-                                .pipe(delay(2000),
-                                      map((user: UserModel) => {
-                                        if (user) {
-                                          return user;
-                                        }
-                                        else {
-                                          this.router.navigate(['/users']);
+    return this.userObservableService.getUser(id)
+      .pipe(delay(2000),
+            map((user: UserModel) => {
+              if (user) {
+                return user;
+              }
+              else {
+                this.router.navigate(['/users']);
 
-                                          return null;
-                                        }
-                                      }),
-                                      take(1),
-                                      catchError(() => {
-                                        this.router.navigate(['/users']);
+                return null;
+              }
+            }),
+            take(1),
+            catchError(() => {
+              this.router.navigate(['/users']);
 
-                                        return of(null);
-                                      }),
-                                      finalize(() => this.spinner.hide()));
+              return of(null);
+            }),
+            finalize(() => this.spinner.hide()));
   }
 }

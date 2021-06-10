@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, } from '@angular/common/http';
 import { Inject, Injectable, } from '@angular/core';
 
 import { Observable, of, throwError, } from 'rxjs';
-import { catchError, publish, refCount, retry, } from 'rxjs/operators';
+import { catchError, publish, refCount, retry, share, } from 'rxjs/operators';
 
 import { UserModel, } from '../models/user.model';
 import { UsersAPI, } from '../users.config';
@@ -21,14 +21,18 @@ export class UserObservableService {
   public getUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(this.usersUrl)
                     .pipe(retry(3),
-                          publish(),
-                          refCount(),
+                          share(),
                           catchError(this.handleError));
   }
 
   public getUser(id: number): Observable<UserModel>
   {
-    return of(new UserModel(0, '', ''));
+    const url = `${this.usersUrl}/${id}`;
+
+    return this.http.get<UserModel>(url)
+                    .pipe(retry(3),
+                          share(),
+                          catchError(this.handleError));
   }
 
   public createUser(user: UserModel): Observable<UserModel>
