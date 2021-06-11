@@ -50,7 +50,16 @@ export class UserObservableService {
 
   public createUser(user: UserModel): Observable<UserModel>
   {
-    return of(user);
+    const url = this.usersUrl;
+    const body = JSON.stringify(user);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.post<UserModel>(url, body, options)
+                    .pipe(catchError(this.handleError));
   }
 
   public deleteUser(user: UserModel): Observable<UserModel>
