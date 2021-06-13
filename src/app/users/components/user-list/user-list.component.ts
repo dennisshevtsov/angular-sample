@@ -1,11 +1,11 @@
 import { Component, OnInit, } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, } from '@angular/router';
 
-import { Observable, of, PartialObserver, } from 'rxjs';
+import { Observable, of, } from 'rxjs';
 import { switchMap, } from 'rxjs/operators';
 
 import { UserModel, } from '../../models/user.model';
-import { UserArrayService, UserObservableService, } from '../../services';
+import { UserObservableService, } from '../../services';
 
 @Component({
   templateUrl: './user-list.component.html',
