@@ -2,7 +2,7 @@ import { Component,
          ChangeDetectionStrategy,
          Input,
          Output,
-         EventEmitter,            } from '@angular/core';
+         EventEmitter, } from '@angular/core';
 
 import { UserModel, } from '../../models/user.model';
 
@@ -17,9 +17,16 @@ export class UserComponent {
   public user: UserModel;
 
   @Output()
-  public editUser: EventEmitter<UserModel> = new EventEmitter<UserModel>();
+  public editUser = new EventEmitter<UserModel>();
+
+  @Output()
+  public deleteUser = new EventEmitter<UserModel>();
 
   public onEditUser(): void {
     this.editUser.emit(this.user);
+  }
+
+  public onDeleteUser(): void {
+    this.deleteUser.emit(this.user);
   }
 }
