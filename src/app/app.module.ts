@@ -3,11 +3,12 @@ import { BrowserModule,    } from '@angular/platform-browser';
 import { Router,           } from '@angular/router';
 import { HttpClientModule, } from '@angular/common/http';
 
-import { AppRoutingModule, } from './app-routing.module';
-import { AppComponent,     } from './app.component';
-import { LayoutModule,     } from './layout/layout.module';
-import { TasksModule,      } from './tasks/tasks.module';
-import { SpinnerModule,    } from './widgets/spinner/spinner.module';
+import { AppRoutingModule,         } from './app-routing.module';
+import { AppComponent,             } from './app.component';
+import { LayoutModule,             } from './layout/layout.module';
+import { TasksModule,              } from './tasks/tasks.module';
+import { SpinnerModule,            } from './widgets/spinner/spinner.module';
+import { httpInterceptorProviders, } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { SpinnerModule,    } from './widgets/spinner/spinner.module';
     SpinnerModule.forRoot(),
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [
     AppComponent,
   ]
