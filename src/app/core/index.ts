@@ -5,3 +5,4 @@ export * from './guards/auth.guard';
 export * from './guards/can-deactivate.guard';
 export * from './interfaces/can-component-deactivate.interface';
 export * from './services/custom-preloading-strategy.service';
+export * from './decorators';
